@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "title": "Redmi",
+    "description": "Brand New",
+    "end_time": "2023-11-16 16:17",
+    "highest_bidder": "tor",
+    "highest_bid": 1111.0,
+    "seller": "tor"
+  },
+  {
+    "id": 2,
+    "title": "Phone",
+    "description": "Brand new",
+    "end_time": "2023-11-17 12:00",
+    "highest_bidder": "ko",
+    "highest_bid": 1001.0,
+    "seller": "tor"
+  },
+  {
+    "id": 3,
+    "title": "Car",
+    "description": "Brand new",
+    "end_time": "2023-11-16 17:00",
+    "highest_bidder": null,
+    "highest_bid": 0,
+    "seller": "ko"
+  }
+]

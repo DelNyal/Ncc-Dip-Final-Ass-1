@@ -1,0 +1,19 @@
+[
+  {
+    "username": "toe",
+    "password": "12345",
+    "contact": "hinthada"
+  },
+  {
+    "username": "tor",
+    "password": "12345",
+    "contact": "hinthada",
+    "email": "tor@gmail.com"
+  },
+  {
+    "username": "ko",
+    "password": "12345",
+    "contact": "myanmar",
+    "email": "ako@gmail.com"
+  }
+]
