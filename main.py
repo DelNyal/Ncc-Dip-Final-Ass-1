@@ -7,6 +7,7 @@ import re  # Import regular expression module for email validation
 USERS_FILE = 'users.txt'
 AUCTIONS_FILE = 'auctions.txt'
 BIDS_FILE = 'bids.txt'
+logged_in_user = None  # Variable to store the currently logged-in user
 
 
 # Function to load data from a file
@@ -54,8 +55,12 @@ def is_valid_email(email):
     Returns:
         bool: True if the email is valid, False otherwise.
     """
+    users = load_data(USERS_FILE)
     email_pattern = re.compile(r"[^@]+@[^@]+\.[^@]+")
-    return bool(re.match(email_pattern, email))
+    patten = bool(re.match(email_pattern, email))
+    check = next((user for user in users if user['email'] == email), False)
+    print("Invalid email format!") if not patten else print("Email already exist!") if check else ""
+    return patten and not check
 
 
 # Function for user registration
@@ -66,16 +71,16 @@ def register_user():
     Returns:
         None
     """
+    print("---Register-----")
     username = input("Enter username: ")
+    (print("Invalid username") or main_menu()) if username == "" else None
     password = input("Enter password: ")
+    (print("Invalid password") or main_menu()) if password == "" else None
     contact = input("Enter contact details: ")
+    (print("Invalid contact details") or main_menu()) if contact == "" else None
     email = input("Enter email address: ")
-
     # Validate email
-    if not is_valid_email(email):
-        print("Invalid email address.")
-        return
-
+    if not is_valid_email(email): main_menu()
     users = load_data(USERS_FILE)
     users.append({'username': username, 'password': password, 'contact': contact, 'email': email})
     save_data(USERS_FILE, users)
@@ -88,19 +93,20 @@ def login_user():
     Log in a user by checking their credentials against the stored data.
 
     Returns:
-        str or None: The username if login is successful, None otherwise.
+        str or None: The email if login is successful, None otherwise.
     """
-    username = input("Enter username: ")
-    password = input("Enter password: ")
-
+    print("---Login----")
     users = load_data(USERS_FILE)
-
+    email = input("Enter email: ")
+    None if next((user for user in users if user['email'] == email), False) else (
+            print("Email is not registered!") or main_menu())
+    password = input("Enter password: ")
     for user in users:
-        if user['username'] == username and user['password'] == password:
+        if user['email'] == email and user['password'] == password:
             print("Login successful!")
-            return username  # Return the username upon successful login
+            return user['username']  # Return the username upon successful login
 
-    print("Invalid username or password.")
+    print("Wrong password.")
     return None
 
 
@@ -134,22 +140,27 @@ def create_auction(username):
     """
     title = input("Enter auction title: ")
     description = input("Enter auction description: ")
-    end_time_str = input("Enter auction end time (YYYY-MM-DD HH:MM): ")
-    end_time_str = end_time_str.replace('24:00', '00:00')
-
-    # Validate date format
+    base_price_str = int(input("Enter base price:"))
     try:
-        end_time = datetime.strptime(end_time_str, '%Y-%m-%d %H:%M')
+        base_price = float(base_price_str)
     except ValueError:
-        print("Invalid date format. Please use YYYY-MM-DD HH:MM.")
+        print("Invalid base amount. Please enter a valid number.")
         return
-
+    end_time_str = int(input("Enter date auction will end (1-7)day: "))
+    if 7 >= end_time_str >= 1:
+        pass
+    else:
+        print("Enter day between 1-7!")
+        return
+    end_time = datetime.now() + timedelta(days=end_time_str)
+    end_time_str = end_time.strftime('%Y-%m-%d %H:%M')
     auctions = load_data(AUCTIONS_FILE)
     auction_id = len(auctions) + 1
     auctions.append({
         'id': auction_id,
         'title': title,
         'description': description,
+        "base_price": base_price,
         'end_time': end_time_str,
         'highest_bidder': None,
         'highest_bid': 0,
@@ -182,13 +193,16 @@ def place_bid(username):
     auction = auctions[auction_id - 1]
     end_time = datetime.strptime(auction['end_time'], '%Y-%m-%d %H:%M')
     time_remaining = end_time - datetime.now()
+    print(f"Title:{auction['title']}")
     if time_remaining <= timedelta(seconds=0):
         print(f"Bidding for this auction has ended.\nThis item is Sold to {auction['highest_bidder']}.")
         return
     print(f"Time Remaining: {cal_time_remain(time_remaining)}")
-    print(f"Highest Bid: {auction['highest_bid']} by {auction['highest_bidder']}")
+    print(f"Highest Bid: {auction['highest_bid']} by {auction['highest_bidder']}") if auction[
+                                                                                          'highest_bidder'] is not None else print(f"Base price: {auction['base_price']} by {auction['seller']}")
 
     bid_amount_str = input("Enter bid amount: ")
+    highest_bid = auction['highest_bid'] if auction['highest_bidder'] is not None else auction['base_price']
 
     # Validate bid amount
     try:
@@ -197,8 +211,8 @@ def place_bid(username):
         print("Invalid bid amount. Please enter a valid number.")
         return
 
-    if bid_amount < auction['highest_bid']:
-        accepted_amount = auction['highest_bid'] + 1
+    if bid_amount <= highest_bid:
+        accepted_amount = highest_bid + 1
         print(f"You need to bid at least {accepted_amount} to become the highest bidder.")
         return
 
@@ -208,7 +222,8 @@ def place_bid(username):
     bids.append({
         'auction_id': auction_id,
         'bidder': auctions[auction_id - 1]['highest_bidder'],
-        'bid_amount': bid_amount
+        'bid_amount': bid_amount,
+        'modify_date': datetime.now().strftime('%Y-%m-%d %H:%M')
     })
 
     save_data(AUCTIONS_FILE, auctions)
@@ -225,26 +240,32 @@ def auction_status():
     Returns:
         None
     """
+    show_end = input("Press (y) to see ended auctions:")
     auctions = load_data(AUCTIONS_FILE)
 
     for auction in auctions:
         end_time = datetime.strptime(auction['end_time'], '%Y-%m-%d %H:%M')
         time_remaining = end_time - datetime.now()
+        if show_end.lower() == "y":
+            ended = "Ended" if time_remaining <= timedelta(seconds=0) else "Open"
+            print(f"---Auction ID: {auction['id']}| Status={ended}----")
+            print(f"=> Title: {auction['title']}         ")
+            print(f"=> Description: {auction['description']} ")
+            print(f"=> Base price:{auction['base_price']}")
+            print(f"=> End Time: {auction['end_time']} ")
 
-        print(f"---Auction ID: {auction['id']}----")
-        print(f"=> Title: {auction['title']}         ")
-        print(f"=> Description: {auction['description']} ")
-        print(f"=> End Time: {auction['end_time']} ")
+            if time_remaining <= timedelta(seconds=0):
+                print(f"=> Sold to: {auction['highest_bidder']} with bid {auction['highest_bid']} ")
+            else:
+                print(f"=> Time Remaining: {cal_time_remain(time_remaining)} |")
+                print(f"=> Highest Bid: {auction['highest_bid']} by {auction['highest_bidder']} ") if auction[
+                                                                                                          'highest_bidder'] is None else ""
+            print(f"=> Seller: {auction['seller']}       ")
 
-        if time_remaining <= timedelta(seconds=0):
-            print(f"=> Sold to: {auction['highest_bidder']} with bid {auction['highest_bid']} ")
+            print()
         else:
-            print(f"=> Time Remaining: {cal_time_remain(time_remaining)} |")
-            print(f"=> Highest Bid: {auction['highest_bid']} by {auction['highest_bidder']} ")
-        print(f"=> Seller: {auction['seller']}       ")
+            continue
 
-        # Add an empty line between auctions for better readability
-        print()
 
 
 # Main menu
@@ -255,8 +276,9 @@ def main_menu():
     Returns:
         None
     """
-    logged_in_user = None  # Variable to store the currently logged-in user
 
+    global logged_in_user
+    os.system('cls')
     while True:
         print("++++Auction Management System++++++")
         print("| 1.Register User  | 2. Login      |")
@@ -293,6 +315,7 @@ def main_menu():
 
 
 if __name__ == "__main__":
+
     # Create empty files if they don't exist
     for file_name in [USERS_FILE, AUCTIONS_FILE, BIDS_FILE]:
         if not os.path.exists(file_name):

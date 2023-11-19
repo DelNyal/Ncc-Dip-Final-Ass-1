@@ -2,7 +2,7 @@ import unittest
 from datetime import datetime, timedelta
 
 # import functions to test
-from main import load_data,main_menu, is_valid_email, cal_time_remain
+from main import load_data,save_data,main_menu,is_valid_email
 
 
 class TestAuctionSystem(unittest.TestCase):
@@ -10,6 +10,7 @@ class TestAuctionSystem(unittest.TestCase):
     def test_load_and_save_data(self):
         # Write test cases for load_data and save_data functions
         load_data("bids")
+        save_data("bids", [])
 
     def test_is_valid_email(self):
         # Write test cases for is_valid_email function

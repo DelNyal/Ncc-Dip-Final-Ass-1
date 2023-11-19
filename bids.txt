@@ -1,27 +1,26 @@
 [
   {
-    "auction_id": 1,
-    "bidder": "a",
-    "bid_amount": 111.0
-  },
-  {
     "auction_id": 2,
-    "bidder": "tor",
-    "bid_amount": 100.0
+    "bidder": "b",
+    "bid_amount": 1000002.0,
+    "modify_date": "2023-11-17 11:59"
   },
   {
-    "auction_id": 1,
-    "bidder": "tor",
-    "bid_amount": 1111.0
+    "auction_id": 6,
+    "bidder": "toe",
+    "bid_amount": 1000.0,
+    "modify_date": "2023-11-18 12:23"
   },
   {
-    "auction_id": 2,
-    "bidder": "tor",
-    "bid_amount": 1000.0
+    "auction_id": 7,
+    "bidder": "aa",
+    "bid_amount": 1001.0,
+    "modify_date": "2023-11-18 12:33"
   },
   {
-    "auction_id": 2,
-    "bidder": "ko",
-    "bid_amount": 1001.0
+    "auction_id": 7,
+    "bidder": "aa",
+    "bid_amount": 10002.0,
+    "modify_date": "2023-11-18 12:34"
   }
 ]

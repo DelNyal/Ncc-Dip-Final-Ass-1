@@ -2,7 +2,8 @@
   {
     "username": "toe",
     "password": "12345",
-    "contact": "hinthada"
+    "contact": "hinthada",
+    "email": "a@gmail.com"
   },
   {
     "username": "tor",
@@ -15,5 +16,17 @@
     "password": "12345",
     "contact": "myanmar",
     "email": "ako@gmail.com"
+  },
+  {
+    "username": "b",
+    "password": "b",
+    "contact": "b",
+    "email": "b@gmail.com"
+  },
+  {
+    "username": "aa",
+    "password": "aa",
+    "contact": "aa",
+    "email": "aa@gmail.com"
   }
 ]
