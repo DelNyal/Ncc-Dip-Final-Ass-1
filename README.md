@@ -75,7 +75,10 @@ Place a bid on a specific auction by collecting bid information and updating auc
 
 - **Parameters:**
   - `username` (str): The username of the bidder.
-
+### `filter_auctions(ended=False):`
+Filter the ended auctions if true default false not filter
+- **Parameters:**
+- `ended` (boolean):Default False 
 ### `auction_status()`
 
 Display the status of all auctions, including information such as title, description, end time, remaining time, highest bid, and seller.

@@ -199,7 +199,8 @@ def place_bid(username):
         return
     print(f"Time Remaining: {cal_time_remain(time_remaining)}")
     print(f"Highest Bid: {auction['highest_bid']} by {auction['highest_bidder']}") if auction[
-                                                                                          'highest_bidder'] is not None else print(f"Base price: {auction['base_price']} by {auction['seller']}")
+                                                                                          'highest_bidder'] is not None else print(
+        f"Base price: {auction['base_price']} by {auction['seller']}")
 
     bid_amount_str = input("Enter bid amount: ")
     highest_bid = auction['highest_bid'] if auction['highest_bidder'] is not None else auction['base_price']
@@ -232,6 +233,24 @@ def place_bid(username):
     print("Bid placed successfully!")
 
 
+# Function to filter the ended auctions
+def filter_auctions(ended=False):
+    """
+    Fileter the auctions base the end status
+    Parameters:
+        ended (boolean) :True to filer ended auction,Default  not filtered
+    Returns:
+        List : the filtered auctions
+    """
+    auctions = load_data(AUCTIONS_FILE)
+    filtered_auctions = []
+    for auction in auctions:
+        end_time = datetime.strptime(auction['end_time'], '%Y-%m-%d %H:%M')
+        time_remaining = end_time - datetime.now()
+        filtered_auctions.append(auction) if ended and time_remaining.total_seconds() > 0 else filtered_auctions.append(auction) if not ended else ""
+    return filtered_auctions
+
+
 # Function to display auction status
 def auction_status():
     """
@@ -240,32 +259,27 @@ def auction_status():
     Returns:
         None
     """
-    show_end = input("Press (y) to see ended auctions:")
-    auctions = load_data(AUCTIONS_FILE)
-
+    show_end = input("Press (y) to see only open auctions:")
+    auctions = filter_auctions(True) if show_end == "y" else filter_auctions(False)
     for auction in auctions:
         end_time = datetime.strptime(auction['end_time'], '%Y-%m-%d %H:%M')
         time_remaining = end_time - datetime.now()
-        if show_end.lower() == "y":
-            ended = "Ended" if time_remaining <= timedelta(seconds=0) else "Open"
-            print(f"---Auction ID: {auction['id']}| Status={ended}----")
-            print(f"=> Title: {auction['title']}         ")
-            print(f"=> Description: {auction['description']} ")
-            print(f"=> Base price:{auction['base_price']}")
-            print(f"=> End Time: {auction['end_time']} ")
+        ended = "Ended" if time_remaining <= timedelta(seconds=0) else "Open"
+        print(f"---Auction ID: {auction['id']}| Status={ended}----")
+        print(f"=> Title: {auction['title']}         ")
+        print(f"=> Description: {auction['description']} ")
+        print(f"=> Base price:{auction['base_price']}")
+        print(f"=> End Time: {auction['end_time']} ")
 
-            if time_remaining <= timedelta(seconds=0):
-                print(f"=> Sold to: {auction['highest_bidder']} with bid {auction['highest_bid']} ")
-            else:
-                print(f"=> Time Remaining: {cal_time_remain(time_remaining)} |")
-                print(f"=> Highest Bid: {auction['highest_bid']} by {auction['highest_bidder']} ") if auction[
-                                                                                                          'highest_bidder'] is None else ""
-            print(f"=> Seller: {auction['seller']}       ")
-
-            print()
+        if time_remaining <= timedelta(seconds=0):
+            print(f"=> Sold to: {auction['highest_bidder']} with bid {auction['highest_bid']} ")
         else:
-            continue
+            print(f"=> Time Remaining: {cal_time_remain(time_remaining)} |")
+            print(f"=> Highest Bid: {auction['highest_bid']} by {auction['highest_bidder']} ") if auction[
+                                                                                                      'highest_bidder'] is None else ""
+        print(f"=> Seller: {auction['seller']}       ")
 
+        print()
 
 
 # Main menu
@@ -278,7 +292,7 @@ def main_menu():
     """
 
     global logged_in_user
-    os.system('cls')
+
     while True:
         print("++++Auction Management System++++++")
         print("| 1.Register User  | 2. Login      |")
