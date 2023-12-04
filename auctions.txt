@@ -1,72 +1,26 @@
 [
   {
     "id": 1,
-    "title": "Redmi",
-    "description": "Brand New",
-    "base_price": 100.0,
-    "end_time": "2023-11-16 16:17",
-    "highest_bidder": "tor",
-    "highest_bid": 1111.0,
-    "seller": "tor"
+    "title": "Monarliza",
+    "description": "World famous picture",
+    "product_img": "https://google.com/monarliza.png",
+    "base_price": 200,
+    "end_time": "2023-12-4 11:44",
+    "highest_bidder": "aa",
+    "highest_bidder_id": 3,
+    "highest_bid": 700.0,
+    "seller": "mgmg"
   },
   {
     "id": 2,
-    "title": "Phone",
-    "description": "Brand new",
-    "base_price": 100,
-    "end_time": "2023-11-17 12:00",
-    "highest_bidder": "b",
-    "highest_bid": 1000002.0,
-    "seller": "tor"
-  },
-  {
-    "id": 3,
-    "title": "Car",
-    "description": "Brand new",
-    "base_price": 100,
-    "end_time": "2023-11-16 17:00",
-    "highest_bidder": null,
-    "highest_bid": 0,
-    "seller": "ko"
-  },
-  {
-    "id": 4,
-    "title": "Watch",
-    "description": "Second",
-    "base_price": 100,
-    "end_time": "2023-11-18 6:00",
-    "highest_bidder": null,
-    "highest_bid": 0,
-    "seller": "b"
-  },
-  {
-    "id": 5,
-    "title": "",
-    "description": "",
-    "base_price": 100,
-    "end_time": "2023-11-18 12:33",
-    "highest_bidder": null,
-    "highest_bid": 0,
-    "seller": "b"
-  },
-  {
-    "id": 6,
-    "title": "Book",
-    "description": "Best seller of world",
-    "base_price": 1000.0,
-    "end_time": "2023-11-22 12:20",
-    "highest_bidder": "toe",
-    "highest_bid": 1000.0,
-    "seller": "aa"
-  },
-  {
-    "id": 7,
-    "title": "Picture",
-    "description": "Monarlizar",
-    "base_price": 1000.0,
-    "end_time": "2023-11-19 12:28",
-    "highest_bidder": "aa",
-    "highest_bid": 10002.0,
-    "seller": "aa"
+    "title": "Redmi note 10",
+    "description": "Phone",
+    "product_img": "https://google.com/img.png",
+    "base_price": 300,
+    "end_time": "2023-12-4 11:31",
+    "highest_bidder": "mgmg",
+    "highest_bidder_id": 1,
+    "highest_bid": 450.0,
+    "seller": "mgmg"
   }
 ]

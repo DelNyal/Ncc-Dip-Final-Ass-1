@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Auction Management System is a simple command-line application that allows users to register, create auctions, place bids, and view auction status. The system uses JSON files to store user data, auction information, and bid records.
+The Auction Management System is a simple command-line application that allows users to register, create auctions, place bids,live auction  and view auction status. The system uses JSON files to store user data, auction information, and bid records.To communicate between client and server using tcp protocol and encrypt decrypt methods.
 
 ## Files
 
@@ -89,6 +89,7 @@ The main menu loop where users can choose various options like registering, logg
 
 ## Usage
 
-1. Run the `main.py` script.
-2. Follow the on-screen instructions to interact with the system.
-3. Choose options from the main menu to perform specific actions.
+1. Run the `aucion_server.py` script.
+2. Run the `client.py` script.
+3. Follow the on-screen instructions to interact with the system.
+4. Choose options from the main menu to perform specific actions.

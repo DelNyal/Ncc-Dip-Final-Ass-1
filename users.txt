@@ -1,32 +1,42 @@
 [
   {
-    "username": "toe",
-    "password": "12345",
+    "id": 1,
+    "username": "mgmg",
+    "email": "mgmg@gmail.com",
+    "password": "mgpass",
     "contact": "hinthada",
-    "email": "a@gmail.com"
+    "balance": 4550.0
   },
   {
-    "username": "tor",
-    "password": "12345",
+    "id": 2,
+    "username": "kotoe",
+    "email": "kotoe@gmail.com",
+    "password": "kopass",
     "contact": "hinthada",
-    "email": "tor@gmail.com"
+    "balance": 5000
   },
   {
-    "username": "ko",
-    "password": "12345",
-    "contact": "myanmar",
-    "email": "ako@gmail.com"
-  },
-  {
-    "username": "b",
-    "password": "b",
-    "contact": "b",
-    "email": "b@gmail.com"
-  },
-  {
+    "id": 3,
     "username": "aa",
-    "password": "aa",
-    "contact": "aa",
-    "email": "aa@gmail.com"
+    "email": "aa@gmail.com",
+    "password": "aapass",
+    "contact": "hinthada",
+    "balance": 5000
+  },
+  {
+    "id": 4,
+    "username": "aung",
+    "email": "aung@gmail.com",
+    "password": "aungpass",
+    "contact": "htnthada",
+    "balance": 5000
+  },
+  {
+    "id": 5,
+    "username": "toe",
+    "email": "toe@gmail.com",
+    "password": "toepass",
+    "contact": "hinthada",
+    "balance": 80000
   }
 ]
