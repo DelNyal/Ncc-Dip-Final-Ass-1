@@ -49,6 +49,7 @@ class AuctionServer:
         self.live_update_clients = set()  # Clients requesting live updates
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server.bind(('127.0.0.1', 5553))
+        self.server.settimeout(5)
         self.server.listen(5)
         self.update_item = None
         self.sent_winner = None

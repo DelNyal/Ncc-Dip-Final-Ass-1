@@ -55,7 +55,7 @@ def is_valid_email(email, flag: bool):
             return True
         else:
             return False
-    return patten and not check
+    return patten and check
 
 
 def handel_err(msg: str, data: str):
@@ -446,7 +446,7 @@ def main_menu():
         elif choice == '2':
             logged_in_user = login_user()
         elif choice == '3':
-            create_auctions()
+            create_auctions() if logged_in_user else print("Please login before create new auction!")
         elif choice == '4':
             bid(logged_in_user) if logged_in_user else print("Please login before place an auction.")
         elif choice == '5':
@@ -470,4 +470,5 @@ if __name__ == '__main__':
     host = "127.0.0.1"
     port = 5553
     client.connect((host, port))
+    client.settimeout(5)
     main_menu()
